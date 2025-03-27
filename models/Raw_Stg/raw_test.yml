@@ -1,0 +1,30 @@
+version:  2
+models:
+  - name: raw_customer
+    columns:
+      - name: CUSTOMERID
+        tests:
+          - unique
+          - not_null
+      - name: CUSTOMERNAME
+        tests:
+          - not_null
+  - name: raw_product
+    columns:
+      - name: CATEGORY
+        tests:
+          - accepted_values:
+              values: ['Furniture', 'Office','Technology','Vehicles']
+          - not_null
+  - name: raw_orders
+    columns:
+      - name: CUSTOMERID
+        tests:
+          - relationships:
+              to: ref('raw_customer')
+              field: CUSTOMERID
+      - name: PRODUCTID
+        tests:
+          - relationships:
+              to: ref('raw_product')
+              field: PRODUCTID
